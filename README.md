@@ -127,3 +127,14 @@ $n = n번째 필드
   + seonghyeon의 기록을 gilsu의 기록으로 교체하는 모습임
   
   ---
+
+***getopts 명령어***
++ 쉘에서 명령을 실행할때 OPTION을 사용할 수 있는데 스크립트 파일 안에서 실행할때도 OPTION을 사용할 수 있음
++ 이 때 스크립트 내에서 직접 옵션을 해석해야하는데 이 작업을 하는 명령어임
++ getopts를 사용하지않고 OPTION을 사용할 수 있지만 그렇게되면 쉘스크립트가 많이 복잡해짐
+
+---
+
+**사용법** \
+```getopts optstring varname [args]
+ex) command -a xyz -b -c hello world //option argument:xyz / option string:-a,-b,-c
