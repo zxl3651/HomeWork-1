@@ -1,16 +1,16 @@
-## Homework-1
+# Homework-1
 ---
-***awk 명령어***
-+ *awk*란 패턴 탐색과 처리를 위한 명령어로 간단하게 파일에서 결과를 추려내고 가공하여 원하는 결과물을 만들어내는 유틸리티임
+## ***awk 명령어***
++ ***awk***란 패턴 탐색과 처리를 위한 명령어로 간단하게 파일에서 결과를 추려내고 가공하여 원하는 결과물을 만들어내는 유틸리티임
 + 초기 개발자 Aho, Weinberger, Kernighan의 첫글자를 따서 이름이 지어짐
 + GNU 프로젝트에서 만들어진 텍스트 처리 프로그래밍 언어로 유닉스 계열의 OS에서 사용 가능함
 + 텍스트 형태로 되어있는 입력 데이터를 행과 단어 별로 처리해 출력함
 ---
-**사용법**
+### **사용법**
 ```
 awk [OPTION][awk program][ARGUMENT]
 ```
- *option의종류*
+***OPTION***의종류
   + -f : awk program 파일 경로 지정
   + -F : 필드 구분 문자 지정
   + -v : awk program에서 사용될 특정 값 지정
@@ -19,7 +19,7 @@ awk program : -f옵션이 사용되지 않았을때, awk가 실행할 awk progra
 ARGUMENT : 입력파일 지정 또는 variable(값) 지정 
 
 ---
-**awk의 주 사용용도** 
+### **awk의 주 사용용도** 
 1. 텍스트 파일의 전체 내용 출력
 2. 파일의 특정 필드만 출력
 3. 특정 필드에 문자열을 추가해서 출력
@@ -27,7 +27,7 @@ ARGUMENT : 입력파일 지정 또는 variable(값) 지정
 5. 필드 값 비교에 따라 레코드 출력
 
 ---
-**사용 예시**
+### **사용 예시**
 
 *예시에 사용할 파일(file.txt)*
 
@@ -52,8 +52,8 @@ $n = n번째 필드
 ` awk '$3 > 60 {print $0}' ./file.txt //세번째 필드(몸무게)가 60을 넘기는 레코드 전체출력 `
 ![image](https://user-images.githubusercontent.com/94293365/141803658-ad5bb916-ac0d-4de4-8b32-71398b395121.png)
 ---
-***sed 명령어***
-+ *ed* 명령어와 *grep* 명령어 기능의 일부를 합친 것이 *sed(stream editor)*명령어임
+## ***sed 명령어***
++ ***ed*** 명령어와 ***grep*** 명령어 기능의 일부를 합친 것이 ***sed(stream editor)***명령어임
 + 기억장치 안의 버퍼를 사용하지 않아 파일의 크기에 제한 없이 작업가능
 + 비 대화형 모드의 줄 단위 편집기
 + 원본을 건드리지 않고 편집하기 때문에 작업이 완료돼도 원본에 영향이 없음(**-i 옵션을 사용하면 원본을 바꿈**)
@@ -64,15 +64,15 @@ $n = n번째 필드
 |차이점|커맨드 창 또는 스크립트에서 동작을 하여 원하는 부분만 수정가능|직접 파일을 열어 편집함|
 
 ---
-**사용 법**
+### **사용법**
 `sed [OPTION] 'command' [input file]`
-  *option의 종류*
+  ***OPTION의 종류***
   + -n : 자동출력을 사용하지 않음
   + -e : command를 가지고 텍스트파일을 가공함
   + -i : 변경된 내용을 파일에 적용함
   + **대부분 -n과 -e 옵션을 사용함**
 ---
-**sed의 주 사용용도**
+### **sed의 주 사용용도**
 1. 특정 행 출력(Print - p)
 2. 특정 행 삭제(Delete - d)
 3. 단어 치환(Substitute - s)
@@ -80,7 +80,7 @@ $n = n번째 필드
 5. 특정 행의 내용을 전부 교체(Change - c)
 
 ---
-**사용 예시**
+### **사용 예시**
 
 *예시에 사용할 파일(file.txt)*
 
@@ -128,38 +128,39 @@ $n = n번째 필드
   
   ---
 
-***getopts 명령어***
-+ 쉘에서 명령을 실행할때 OPTION을 사용할 수 있는데 스크립트 파일 안에서 실행할때도 OPTION을 사용할 수 있음
+## ***getopts 명령어***
++ 쉘에서 명령을 실행할때 ***OPTION***을 사용할 수 있는데 스크립트 파일 안에서 실행할때도 ***OPTION***을 사용할 수 있음
 + 이 때 스크립트 내에서 직접 옵션을 해석해야하는데 이 작업을 하는 명령어임
-+ *getopts*를 사용하지않고 OPTION을 사용할 수 있지만 그렇게되면 쉘스크립트가 많이 복잡해짐
++ ***getopts***를 사용하지않고 ***OPTION***을 사용할 수 있지만 그렇게되면 쉘스크립트가 많이 복잡해짐
 
 ---
 
-**사용법** 
-```getopts optstring varname [args]
+### **사용법** 
+```
+getopts optstring varname [args]
 ex) command -a xyz -b -c hello world //option argument:xyz / option string:-a,-b,-c
 ```
 ---
 
-**옵션의 종류** 
-1. *short*
-2. *long*
+### **옵션의 종류** 
+1. ***short***
+2. ***long***
 
-+ *short* : 옵션앞에 - 하나만 붙는 옵션, getopts 명령을 이용하지 않고 직접 해석해 처리하면 스크립트가 복잡해짐
++ ***short*** : 옵션앞에 - 하나만 붙는 옵션, ***getopts*** 명령을 이용하지 않고 직접 해석해 처리하면 스크립트가 복잡해짐
   + ` $ command -a -b -c ` 
   + ` $ command -abc = $ command -b -ca // 옵션을 붙여서 사용할 수 있으며 순서가 바뀌어도 된다 `
   + ` $ command -a xxx -b yyy = $ command -axxx -byyy // 옵션인수를 가질 수 있다 / 옵션인수를 옵션에 붙여 쓸 수 있음 `
   + ` $ command -a -b -- -c // 옵션 구분자 '--'가 올 경우 우측에 있는 값은 옵션으로 해석하면 안됨 `
-+ *long* : 옵션앞에 -- 가 붙는 옵션, short 옵션과는 달리 붙여 쓸 수가 없기에 사용방법이 간단하여 직접 해석하여 처리하는 것이 어렵지않음
-  + 주의해야 할 점: \
++ ***long*** : 옵션앞에 -- 가 붙는 옵션, ***short*** 옵션과는 달리 붙여 쓸 수가 없기에 사용방법이 간단하여 직접 해석하여 처리하는 것이 어렵지않음
+  + 주의해야 할 점: 
   + ` ./test.sh -a aaa --posix --long 123 -b --warning=2 -- hello world ` 와 같은 문장에서 getopts 사용시
-    + 1. getopts는 하나의 문자를 옵션으로 보기 때문에 p,o,s,i,x를 모두 붙여쓰기한 옵션명으로 인식
-    + 2. 위의 long옵션처럼 long옵션이 옵션인수를 사용하게 되면 그 이후의 옵션(-b)는 getopts에 의해 인식이 되지않음
-  => 따라서 *getopts* 명령으로 *long,short*를 동시에 처리하긴 힘드므로 *long*을 먼저 처리하고 *short*를 처리하면 동일하게 사용가능
+  1. getopts는 하나의 문자를 옵션으로 보기 때문에 p,o,s,i,x를 모두 붙여쓰기한 옵션명으로 인식
+  2. 위의 ***long***옵션처럼 ***long***옵션이 옵션인수를 사용하게 되면 그 이후의 옵션(-b)는 getopts에 의해 인식이 되지않음
+  => 따라서 ***getopts*** 명령으로 ***long,short***를 동시에 처리하긴 힘드므로 ***long***을 먼저 처리하고 ***short***를 처리하면 동일하게 사용가능
   + `$ -a aaa -b -- hello world // 처리한 long 옵션은 삭제하고 short 옵션만 getopts 명령에 전달 `
 ---
-**Error reporting** \
-*getopts* 명령은 error reporting과 관련해서 다음과 같은 두 개의 모드를 제공함
+### **Error reporting** 
+***getopts*** 명령은 ***error reporting***과 관련해서 다음과 같은 두 개의 모드를 제공함
 |Verbose mode||
 |:---:|:---:|
 |invalid 옵션 사용|opt 값을 ? 문자로 설정/OPTARG 값은 unset/ 오류 메시지 출력|
@@ -172,7 +173,24 @@ ex) command -a xyz -b -c hello world //option argument:xyz / option string:-a,-b
 
 + default는 verbose mode인데 기본적으로 옵션과 관련된 오류메시지가 표시되므로 스크립트를 배포할 때는 silent mode를 이용
 + silent mode를 설정하기 위해서는 옵션 스트링의 맨 앞부분에 : 문자를 추가해 주면 됨
-+ 주의해야 할 점: OPTION, OPTARG 변수는 local 변수가 아니므로 함수 내에서 local로 설정해 사용해야 함
++ 주의해야 할 점: ***OPTION***, ***OPTARG*** 변수는 ***local*** 변수가 아니므로 함수 내에서 ***local***로 설정해 사용해야 함
 + `$ command -a -b -c ` => 옵션 스트링이 'a:bc' 이면 -a는 옵션인수를 가지게 되는데 옵션인자에는 어떤 문자도 올 수 있기 때문에 다음과 같이 -a에 옵션인수가 설정되지 않으면 -b가 -a의 옵션 인수가 됨
 + `$ command -a foo.c -b -c ` => 파일명이나 기타 스트링은 마지막에 와야하는데 그렇지 않은 경우 이후 옵션은 인식되지 않음, 다음과 같은 경우에는 -b -c 옵션은 인식되지않음
 
+---
+
+## ***getopt 명령어***
++ ***getopt***명령어 는 이름이 ***getopts***명령어와 비슷한데 /usr/bin/getopt 에 위치한 외부 명령임
++ 기본적으로 ***short,long***옵션을 모두 지원함
++ 옵션 인수를 가질 경우 : 문자를 사용하는 것은 ***getopts*** 명령어와 동일함
+```bash
+$ getopt -o a:bc
+=> short 옵션 지정은 -o 옵션으로 함
+
+$ getopt -l help,path:,name:
+=> long 옵션 지정은 -l 옵션으로 하고 옵션명은 ','로 구분함
+=> 명령 라인에서 옵션 인수 사용은 "--name foo" 또는 "--name=foo" 두 가지 모두 가능
+
+$ getopt -o a:bc -l help,path:,name: -- "$@"
+=> 명령 마지막에는 -- 와 함께 "$@" 를 붙임
+```
