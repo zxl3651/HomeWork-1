@@ -1,7 +1,7 @@
 ## Homework-1
 ---
 ***awk 명령어***
-+ awk란 패턴 탐색과 처리를 위한 명령어로 간단하게 파일에서 결과를 추려내고 가공하여 원하는 결과물을 만들어내는 유틸리티임
++ *awk*란 패턴 탐색과 처리를 위한 명령어로 간단하게 파일에서 결과를 추려내고 가공하여 원하는 결과물을 만들어내는 유틸리티임
 + 초기 개발자 Aho, Weinberger, Kernighan의 첫글자를 따서 이름이 지어짐
 + GNU 프로젝트에서 만들어진 텍스트 처리 프로그래밍 언어로 유닉스 계열의 OS에서 사용 가능함
 + 텍스트 형태로 되어있는 입력 데이터를 행과 단어 별로 처리해 출력함
@@ -53,7 +53,7 @@ $n = n번째 필드
 ![image](https://user-images.githubusercontent.com/94293365/141803658-ad5bb916-ac0d-4de4-8b32-71398b395121.png)
 ---
 ***sed 명령어***
-+ ed 명령어와 grep 명령어 기능의 일부를 합친 것이 sed(stream editor)명령어임
++ *ed* 명령어와 *grep* 명령어 기능의 일부를 합친 것이 *sed(stream editor)*명령어임
 + 기억장치 안의 버퍼를 사용하지 않아 파일의 크기에 제한 없이 작업가능
 + 비 대화형 모드의 줄 단위 편집기
 + 원본을 건드리지 않고 편집하기 때문에 작업이 완료돼도 원본에 영향이 없음(**-i 옵션을 사용하면 원본을 바꿈**)
@@ -131,10 +131,48 @@ $n = n번째 필드
 ***getopts 명령어***
 + 쉘에서 명령을 실행할때 OPTION을 사용할 수 있는데 스크립트 파일 안에서 실행할때도 OPTION을 사용할 수 있음
 + 이 때 스크립트 내에서 직접 옵션을 해석해야하는데 이 작업을 하는 명령어임
-+ getopts를 사용하지않고 OPTION을 사용할 수 있지만 그렇게되면 쉘스크립트가 많이 복잡해짐
++ *getopts*를 사용하지않고 OPTION을 사용할 수 있지만 그렇게되면 쉘스크립트가 많이 복잡해짐
 
 ---
 
-**사용법** \
+**사용법** 
 ```getopts optstring varname [args]
 ex) command -a xyz -b -c hello world //option argument:xyz / option string:-a,-b,-c
+```
+---
+
+**옵션의 종류** 
+1. *short*
+2. *long*
+
++ *short* : 옵션앞에 - 하나만 붙는 옵션, getopts 명령을 이용하지 않고 직접 해석해 처리하면 스크립트가 복잡해짐
+  + ` $ command -a -b -c ` 
+  + ` $ command -abc = $ command -b -ca // 옵션을 붙여서 사용할 수 있으며 순서가 바뀌어도 된다 `
+  + ` $ command -a xxx -b yyy = $ command -axxx -byyy // 옵션인수를 가질 수 있다 / 옵션인수를 옵션에 붙여 쓸 수 있음 `
+  + ` $ command -a -b -- -c // 옵션 구분자 '--'가 올 경우 우측에 있는 값은 옵션으로 해석하면 안됨 `
++ *long* : 옵션앞에 -- 가 붙는 옵션, short 옵션과는 달리 붙여 쓸 수가 없기에 사용방법이 간단하여 직접 해석하여 처리하는 것이 어렵지않음
+  + 주의해야 할 점: \
+  + ` ./test.sh -a aaa --posix --long 123 -b --warning=2 -- hello world ` 와 같은 문장에서 getopts 사용시
+    + 1. getopts는 하나의 문자를 옵션으로 보기 때문에 p,o,s,i,x를 모두 붙여쓰기한 옵션명으로 인식
+    + 2. 위의 long옵션처럼 long옵션이 옵션인수를 사용하게 되면 그 이후의 옵션(-b)는 getopts에 의해 인식이 되지않음
+  => 따라서 *getopts* 명령으로 *long,short*를 동시에 처리하긴 힘드므로 *long*을 먼저 처리하고 *short*를 처리하면 동일하게 사용가능
+  + `$ -a aaa -b -- hello world // 처리한 long 옵션은 삭제하고 short 옵션만 getopts 명령에 전달 `
+---
+**Error reporting** \
+*getopts* 명령은 error reporting과 관련해서 다음과 같은 두 개의 모드를 제공함
+|Verbose mode||
+|:---:|:---:|
+|invalid 옵션 사용|opt 값을 ? 문자로 설정/OPTARG 값은 unset/ 오류 메시지 출력|
+|옵션인수 값을 제공 X | opt 값을 ? 문자로 설정/OPTARG 값은 unset/ 오류 메시지 출력|
+
+|Silent mode||
+|:---:|:---:|
+|invalid 옵션 사용|opt 값을 ? 문자로 설정/OPTARG 값은 해당 옵션 문자로 설정|
+|옵션인수 값을 제공 X | opt 값을 : 문자로 설정/OPTARG 값은 해당 옵션 문자로 설정| 
+
++ default는 verbose mode인데 기본적으로 옵션과 관련된 오류메시지가 표시되므로 스크립트를 배포할 때는 silent mode를 이용
++ silent mode를 설정하기 위해서는 옵션 스트링의 맨 앞부분에 : 문자를 추가해 주면 됨
++ 주의해야 할 점: OPTION, OPTARG 변수는 local 변수가 아니므로 함수 내에서 local로 설정해 사용해야 함
++ `$ command -a -b -c ` => 옵션 스트링이 'a:bc' 이면 -a는 옵션인수를 가지게 되는데 옵션인자에는 어떤 문자도 올 수 있기 때문에 다음과 같이 -a에 옵션인수가 설정되지 않으면 -b가 -a의 옵션 인수가 됨
++ `$ command -a foo.c -b -c ` => 파일명이나 기타 스트링은 마지막에 와야하는데 그렇지 않은 경우 이후 옵션은 인식되지 않음, 다음과 같은 경우에는 -b -c 옵션은 인식되지않음
+
