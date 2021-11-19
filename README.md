@@ -11,12 +11,12 @@
 awk [OPTION][awk program][ARGUMENT]
 ```
 ***OPTION***의종류
-  + -f : awk program 파일 경로 지정
+  + -f : ***awk program*** 파일 경로 지정
   + -F : 필드 구분 문자 지정
-  + -v : awk program에서 사용될 특정 값 지정
+  + -v : ***awk program***에서 사용될 특정 값 지정
 
-awk program : -f옵션이 사용되지 않았을때, awk가 실행할 awk program 코드 지정 \
-ARGUMENT : 입력파일 지정 또는 variable(값) 지정 
+***awk program*** : -f옵션이 사용되지 않았을때, ***awk***가 실행할 ***awk program*** 코드 지정 \
+***ARGUMENT*** : 입력파일 지정 또는 variable(값) 지정 
 
 ---
 ### **awk의 주 사용용도** 
@@ -53,7 +53,7 @@ $n = n번째 필드
 ![image](https://user-images.githubusercontent.com/94293365/141803658-ad5bb916-ac0d-4de4-8b32-71398b395121.png)
 ---
 ## ***sed 명령어***
-+ ***ed*** 명령어와 ***grep*** 명령어 기능의 일부를 합친 것이 ***sed(stream editor)***명령어임
++ ***ed*** 명령어와 ***grep*** 명령어 기능의 일부를 합친 것이 ***sed(stream editor)*** 명령어임
 + 기억장치 안의 버퍼를 사용하지 않아 파일의 크기에 제한 없이 작업가능
 + 비 대화형 모드의 줄 단위 편집기
 + 원본을 건드리지 않고 편집하기 때문에 작업이 완료돼도 원본에 영향이 없음(**-i 옵션을 사용하면 원본을 바꿈**)
@@ -66,6 +66,7 @@ $n = n번째 필드
 ---
 ### **사용법**
 `sed [OPTION] 'command' [input file]`
+
   ***OPTION의 종류***
   + -n : 자동출력을 사용하지 않음
   + -e : command를 가지고 텍스트파일을 가공함
@@ -183,6 +184,10 @@ ex) command -a xyz -b -c hello world //option argument:xyz / option string:-a,-b
 + ***getopt***명령어 는 이름이 ***getopts***명령어와 비슷한데 /usr/bin/getopt 에 위치한 외부 명령임
 + 기본적으로 ***short,long***옵션을 모두 지원함
 + 옵션 인수를 가질 경우 : 문자를 사용하는 것은 ***getopts*** 명령어와 동일함
+---
+
+### **예시**
+
 ```bash
 $ getopt -o a:bc
 => short 옵션 지정은 -o 옵션으로 함
@@ -194,3 +199,56 @@ $ getopt -l help,path:,name:
 $ getopt -o a:bc -l help,path:,name: -- "$@"
 => 명령 마지막에는 -- 와 함께 "$@" 를 붙임
 ```
+
+---
+
+### **설정하지 않은 옵션이 사용되거나 또는 옵션 인수가 빠지면 오류 메시지를 출력**
+
+```bash
+#!/bin/bash
+
+options=$( getopt -o a:bc -l help,path:,name: -- "$@" )
+echo "$options"
+---------------------------------------------------------
+
+$ ./test.sh -x
+getopt: invalid option -- 'x'
+
+$ ./test.sh --xxx
+getopt: unrecognized option '--xxx'
+
+4 ./test.sh -a
+getopt: option requires an argument -- 'a'
+
+$ ./test.sh --name
+getopt: option '--name' requires an argument
+```
+
+---
+
+###  ***getopts*** 에서는 힘들게 분류하여 사용했던 옵션들을 사용하기 좋게 정렬해줌
+
+```bash
+#!/bin/bash
+
+options=$( getopt -o a:bc -l help,path:,name: -- "$@" )
+echo "$options"
+-------------------------------------------------------
+
+$ ./test.sh -a123 -bc hello.c
+-a '123' -bc -- 'hello.c'
+=> 옵션이 아닌 hello.c는 '--' 뒤로 이동
+=> -a123 이 -a와 '123'으로 분리
+=> -bc 는 -b 와 -c로 분리
+
+$ ./test.sh --name foo --path=/usr/bin
+--name 'foo' --path '/usr/bin' --
+=> --path=/usr/bin 이 --path '/usr/bin' 으로 분리
+=> '--'는 항상 끝부분에 붙음
+
+$ ./test.sh -a123 -bc hello.c -- -x --yyy
+-a '123' -b -c -- 'hello.c' '-x' '--yyy'
+=> '--'(end of options) 처리도 해줌
+```
+
+---
